@@ -1,0 +1,28 @@
+USE ROLE SYSADMIN;
+USE WAREHOUSE DEF_WS_WH;
+
+CREATE OR REPLACE DATABASE EXERCISE_DB;
+
+CREATE OR REPLACE TABLE EXERCISE_DB.PUBLIC.CUSTOMERS (
+ID INT,
+first_name varchar,
+last_name varchar,
+email varchar,
+age int,
+city varchar);
+
+USE DATABASE EXERCISE_DB;
+
+SELECT * FROM EXERCISE_DB.PUBLIC.CUSTOMERS;
+ 
+ //Loading the data from S3 bucket
+  
+COPY INTO EXERCISE_DB.PUBLIC.CUSTOMERS
+    FROM s3://snowflake-assignments-mc/gettingstarted/customers.csv
+    file_format = (type = csv 
+                   field_delimiter = ',' 
+                   skip_header=1);
+//Validate
+SELECT * FROM EXERCISE_DB.PUBLIC.CUSTOMERS;
+
+-- SELECT COUNT(*) FROM EXERCISE_DB.PUBLIC.CUSTOMERS;
