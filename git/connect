@@ -9,7 +9,7 @@ USE SCHEMA MANAGE_DB.INTEGRATIONS;
 CREATE OR REPLACE SECRET my_git_secret
   TYPE = password
   USERNAME = 'devacc29'
-  PASSWORD = 'xxxx';
+  PASSWORD = 'xxxxxxxxxxxx';
 
 
 CREATE OR REPLACE API INTEGRATION git_api_integration
@@ -37,5 +37,13 @@ CREATE OR REPLACE GIT REPOSITORY git_tf_repo
   ORIGIN = 'https://github.com/Devacc29/ACEO-MODULES';
  
 ls @git_snow_repo/branches/main;
+SHOW GIT BRANCHES IN git_snow_repo;
+
+-- after commiting new chnages fetch it 
+ALTER GIT REPOSITORY git_snow_repo FETCH;
+
+
 ls @git_tf_repo/branches/main; 
 -- ls @git_tf_repo/tags/tag_name;
+
+EXECUTE IMMEDIATE FROM @git_sample/branches/main/sql/base.sql;
