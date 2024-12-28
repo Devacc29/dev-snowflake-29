@@ -1,0 +1,41 @@
+USE ROLE ACCOUNTADMIN;
+USE WAREHOUSE DEF_WS_WH;
+
+USE DATABASE MANAGE_DB;
+
+CREATE OR REPLACE SCHEMA INTEGRATIONS;
+USE SCHEMA MANAGE_DB.INTEGRATIONS;
+  
+CREATE OR REPLACE SECRET my_git_secret
+  TYPE = password
+  USERNAME = 'devacc29'
+  PASSWORD = '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';
+
+
+CREATE OR REPLACE API INTEGRATION git_api_integration
+  API_PROVIDER = git_https_api
+  API_ALLOWED_PREFIXES = ('https://github.com/Devacc29/')
+  ALLOWED_AUTHENTICATION_SECRETS = (my_git_secret)
+  ENABLED = TRUE;
+
+CREATE OR REPLACE GIT REPOSITORY git_repo
+  API_INTEGRATION = git_api_integration
+  GIT_CREDENTIALS = my_git_secret
+  ORIGIN = 'https://github.com/Devacc29/dev-snowflake-29';
+
+DROP GIT REPOSITORY GIT_REPO;
+
+CREATE OR REPLACE GIT REPOSITORY git_snow_repo
+  API_INTEGRATION = git_api_integration
+  GIT_CREDENTIALS = my_git_secret
+  ORIGIN = 'https://github.com/Devacc29/dev-snowflake-29';
+
+
+CREATE OR REPLACE GIT REPOSITORY git_tf_repo
+  API_INTEGRATION = git_api_integration
+  GIT_CREDENTIALS = my_git_secret
+  ORIGIN = 'https://github.com/Devacc29/ACEO-MODULES';
+ 
+ls @git_snow_repo/branches/main;
+ls @git_tf_repo/branches/main; 
+-- ls @git_tf_repo/tags/tag_name;
