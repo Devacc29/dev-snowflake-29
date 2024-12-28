@@ -9,7 +9,7 @@ USE SCHEMA MANAGE_DB.INTEGRATIONS;
 CREATE OR REPLACE SECRET my_git_secret
   TYPE = password
   USERNAME = 'devacc29'
-  PASSWORD = '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';
+  PASSWORD = 'xxxx';
 
 
 CREATE OR REPLACE API INTEGRATION git_api_integration
